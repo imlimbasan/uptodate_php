@@ -9,11 +9,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous" defer></script>
   
 
-<link rel="stylesheet" type="text/css" href="../cssPages/index.css">
-<link rel="stylesheet" type="text/css" href="../cssPages/footer.css">
-<link rel="stylesheet" type="text/css" href="../cssPages/contact.css">
-<link rel="stylesheet" type="text/css" href="../cssPages/slider.css">
-<link rel="stylesheet" type="text/css" href="../cssPages/navbar.css">
+<link rel="stylesheet" type="text/css" href="/cssPages/index.css">
+<link rel="stylesheet" type="text/css" href="/cssPages/footer.css">
+<link rel="stylesheet" type="text/css" href="/cssPages/contact.css">
+<link rel="stylesheet" type="text/css" href="/cssPages/slider.css">
+<link rel="stylesheet" type="text/css" href="/cssPages/navbar.css">
+<link rel="stylesheet" type="text/php" href="/index.php">
 <script src="/jsPages/contact.js" defer></script>
 <script src="navbar.js" defer></script>
 <script src="index.js" defer></script>
@@ -43,16 +44,19 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0 border-bottom">
       <li class="nav-item ">
-        <a class="nav-link nav-bg" href="../htmlPages/index.php">Home</a>
+        <a class="nav-link nav-bg" href="index.html">Home</a>
       </li>     
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        
-    
-       
         <li class="nav-item">
-          <a class="nav-link nav-bg" href="../htmlPages/contact.php">Contact</a>
+          <a class="nav-link nav-bg" href="#">Api</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-bg" href="#">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-bg" href="/htmlPages/contact.html">Contact</a>
         </li>
       </ul>
     </form>
@@ -62,83 +66,86 @@
 </header>
 
 
-<?php
-session_start(); 
 
-$dsn = "mysql:host=localhost;dbname=up_to_date";
-$dbusername = "root";
-$dbpassword = "PasssS2@";
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {    
-    if (!empty($_POST['username']) && !empty($_POST['password'])) {
-        try {
-            
-            $pdo = new PDO($dsn, $dbusername, $dbpassword);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-            $stmt->bindParam(':username', $_POST['username']);
-            $stmt->bindParam(':password', $_POST['password']);
-            $stmt->execute();
-
-            if ($stmt->rowCount() == 1) {
-                $_SESSION['username'] = $_POST['username'];
-                header("Location: index_blog.php"); 
-                exit();
-            } else {
-                $error = "Username sau parolă incorectă!";
-            }
-        } catch (PDOException $e) {
-            echo "Eroare de conectare la baza de date: " . $e->getMessage();
-        }
-    } else {
-        $error = "Completați ambele câmpuri!";
-    }
-}
-?>
-
-<style>
-        body {
-            background-color: #f8f9fa;
-            padding: 50px;
-        }
-        .login-container {
-            max-width: 500px;
-            margin: 10rem auto;
-            background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
-            padding-top: 3rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="login-container">
-            <h2 class="mb-4">Login</h2>
-            <?php if (isset($error)) { ?>
-                <div class="alert alert-danger"><?php echo $error; ?></div>
-            <?php } ?>
-            <form method="post">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-            <p class="mt-3">Don't have an account? <a href="signup.php">Sign Up</a></p>
+<div class="container container-padding">
+  <div class="jumbotron container heading-bg">
+    <h1 class="display-3 head-h1 d-flex align-items-center justify-content-center">Contact Us</h1>
+    <div class="row">
+      <div class="col-3 p-3 mb-2 ">
+        <div class="contact-left">
+        <div class="contact-left">   
+          <a href="https://twitter.com/MAIAdviserX" class="fa-brands fa-x-twitter"></a> <a href="https://twitter.com/MAIAdviserX" target="_blank">Twitter</a>   
+          <br><br><br>
+          <a href="https://t.me/XAdvise" class="fa-brands fa-telegram"></a>  <a href="https://t.me/XAdvise" target="_blank">Telegram</a>   
+          <br><br><br>
+          <a href="https://www.youtube.com/channel/UCDPPC6eRr8xVabS9M_5mP6g" class="fa-brands fa-youtube"></a>  <a href="https://www.youtube.com/channel/UCDPPC6eRr8xVabS9M_5mP6g">YouTube</a>    
+          <br><br> <br>
+          <a href="mailto: abc@example.com" class="fa-solid fa-envelope" id="mailto"></a>  <a href = "mailto: abc@example.com" id="mailto">maiadvise@gmail.com</a>
         </div>
-    </div>
-</body>
+        </div>
+  
+        <div class="contact-left-hidden">
+          <a href="https://twitter.com/MAIAdviserX" class="fa-brands fa-x-twitter"></a> 
+          <a href="https://t.me/XAdvise" class="fa-brands fa-telegram"></a> 
+        <a href="mailto: abc@example.com" class="fa-solid fa-envelope" id="mailto"></a><a href = "mailto: abc@example.com" id="mailto">maiadvise@gmail.com</a>
+        <a href="mailto: abc@example.com" class="fa-solid fa-envelope" id="sendemail"></a>
+      </div>
+        
+      </div>
+    
+    <div class="col-sm-9 p-3">
+      <form class="row g-3 needs-validation" id="myForm" novalidate>
 
+
+        <div class="mb-3">
+          <label for="validationCustom01" class="form-label">Full name:</label>
+          <input type="text" class="form-control" id="validationCustom01" placeholder="Enter your full name"  required>
+          <div class="invalid-feedback">
+            Please provide a valid full name.
+          </div>
+        </div>   
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">E-mail:</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="example@gmail.com"  aria-describedby="emailHelp" required>
+          <div class="invalid-feedback">
+            Please provide a valid email address.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="validationTextarea" class="form-label">Message:</label>
+          <textarea class="form-control" id="validationTextarea" placeholder="Tell us your problem" required></textarea>
+          <div class="invalid-feedback">
+            Please provide a message.
+          </div>
+        </div>
+     
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+
+ 
+        <div class="alert alert-success d-none form-success" role="alert" id="successAlert">
+          <h4 class="alert-heading form-success">Well done! Your message has been sent successfully. We will get back to you as soon as possible.</h4>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+</div>
 
   
 <footer class="nav-bg">
