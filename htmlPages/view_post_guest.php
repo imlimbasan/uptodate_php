@@ -56,6 +56,8 @@ include "../includes/update_post.php";
 </div>
 
 
+
+
 <div class="container mt-5">
 
         <?php foreach($query as $q){?>
@@ -64,30 +66,7 @@ include "../includes/update_post.php";
                     <?php echo $q['title']?>
                 </h1>
                 <p class="mt-5 border-left border-dark pl-3 overflow-auto"><?php echo $q['content']?></p>
-            </div>
-
-            <div class="d-flex mt-2 justify-content-center align-items-center">
-                                            <a href="edit.php?id=<?php echo $q['test_blog_id'];?>" class="btn btn-light btn-sm">Edit</a> 
-                    <button type="button" class="btn btn-danger btn-sm ml-2" data-toggle="modal" data-target="#exampleModalCenter">
-                    Delete
-                    </button>
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Are you shure?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm ml-2" data-dismiss="modal">Close</button>
-                            <a href="../includes/deletePostClick.php?id=<?php echo $q['test_blog_id'];?>" class="btn btn-danger btn-sm ml-2" data-toggle="confirmation" data-placement="bottom"> Delete </a>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-            </div>
+            </div>           
 
         <?php }?>
 

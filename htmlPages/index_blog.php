@@ -1,18 +1,34 @@
 <?php 
-
 session_start();
 
 $conn = mysqli_connect("localhost", "root", "PasssS2@", "up_to_date");
 
-$sql = "SELECT * FROM test_blog WHERE test_blog_id IN (16, 18, 19, 20)";
+$sql_count = "SELECT COUNT(*) AS total_inregistrari FROM test_blog";
+$query_count = mysqli_query($conn, $sql_count);
+    $row_count = mysqli_fetch_assoc($query_count);
+    $total_inregistrari = $row_count['total_inregistrari'];
 
-$query= mysqli_query($conn, $sql);
-$posts=array();
+
+$sql_count = "SELECT COUNT(*) AS total_useri FROM users";
+$query_users = mysqli_query($conn, $sql_count);
+    $user_count = mysqli_fetch_assoc($query_users);
+    $total_useri = $user_count['total_useri'];
+
+
+
+$sql = "SELECT * FROM test_blog WHERE test_blog_id IN (16, 18, 19, 20, 21, 22, 24, 25, 26)";
+$query = mysqli_query($conn, $sql);
+$posts = array();
+
 while ($row = mysqli_fetch_assoc($query)) {
     array_push($posts, $row);
-  }
+}
 
-  mysqli_close($conn);
+mysqli_close($conn);
+
+define('__DEBUG__', true);
+
+
 
 ?>
 
@@ -23,11 +39,9 @@ while ($row = mysqli_fetch_assoc($query)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="blog.css">
-    <link rel="stylesheet" type="text/css" href="blog.rtl.css">
-
+    <link rel="stylesheet" type="text/css" href="blog.rtl.css">    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-
+    <link rel="stylesheet" href="/f/css/lightbox.css?<?=__DEBUG__?time():''?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
 <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -40,6 +54,19 @@ while ($row = mysqli_fetch_assoc($query)) {
 <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
 <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#712cf9">
+
+
+
+<!-- bootstrap 4.4 -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> -->
+
+
+
+
+<!-- favicons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
 
   </head>
   <body>
@@ -58,8 +85,7 @@ while ($row = mysqli_fetch_assoc($query)) {
         <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
       </symbol>
     </svg>
-
-  
+ 
      
     
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -75,51 +101,63 @@ while ($row = mysqli_fetch_assoc($query)) {
   </symbol>
 </svg>
 
-<div class="container">
-  <header class="border-bottom lh-1 py-3">
+
+
+<div class="content d-flex justify-content-center align-items-center">
+<div class="welcome"> 
+  <header class=" lh-1 py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
-        <a class="link-secondary" href="createblog.html">Subscribe</a>
+        <a class="link-secondary" href="index.php">About Us</a>
       </div>
       <div class="col-4 text-center">
-        <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">UpToDate</a>
+        <a class="blog-header-logo text-body-emphasis text-decoration-none" href="index_blog.php">UpToDate</a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">   
 
-      <a href="test1index.php" class="btn btn-outline-dark"> Create Post</a>
-    
+      
+      <?php
+            if(isset($_SESSION["username"])){
+                echo '<a class="btn btn-sm btn-outline-dark mx-2" href="test1index.php">Create Post</a>';
+            }else{
+                echo '<a class="btn btn-sm btn-outline-dark mx-2 " href="./login.php">Create Post</a>';
+            };
+        ?> 
+
             <?php
             if(isset($_SESSION["username"])){
-                echo '<li class="nav-item">
-                <a class="btn btn-sm btn-outline-secondary" href="../includes/logout.php">LOG OUT</a>
-              </li>';
+                echo '<a class="btn btn-sm btn-outline-secondary mx-2" href="../includes/logout.php">LOG OUT</a>';
             }else{
-                echo '<li class="nav-item">
-                <a class="btn btn-sm btn-outline-secondary" href="./login.php">LOG IN</a>
-              </li>';
+                echo '<a class="btn btn-sm btn-outline-secondary mx-2" href="./login.php">LOG IN</a>';
             };
-        ?></a>
+        ?>
       </div>
     </div>
   </header>
-
-  <div class="nav-scroller  border-bottom">   
-  </div>
 </div>
+        </div>
 
 
 
 
-
-
-
-
-<main class="container">
-  <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+<div class="content d-flex justify-content-center align-items-center">
+<div class="welcome">   
+  <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary  ">  
     <div class="col-lg-6 px-0">
       <h1 class="display-4 fst-italic"><?php echo $posts[0]['title']; ?></h1>
       <p class="lead my-3"><?php echo $posts[0]['content']; ?></p>
-      <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>
+
+      <!-- <p class="lead mb-0"><a href="view_post_guest.php?id=<?php echo $posts[0]['test_blog_id'];?>" class="text-body-emphasis fw-bold">Continue reading...</a></p> -->
+
+      
+      <?php
+            if(isset($_SESSION["username"])){
+                echo '<p class="lead mb-0"><a class="text-body-emphasis fw-bold" href="testview.php?id=' . $posts[0]['test_blog_id'] . '">Continue reading...</a></p>';
+            }else{
+                echo '<p class="lead mb-0"><a class="text-body-emphasis fw-bold" href="view_post_guest.php?id=' . $posts[0]['test_blog_id'] . '">Continue reading...</a></p>';
+            };
+        ?>
+
     </div>
   </div>
 
@@ -131,11 +169,21 @@ while ($row = mysqli_fetch_assoc($query)) {
           <strong class="d-inline-block mb-2 text-primary-emphasis">Music</strong>
           <h3 class="mb-0"><?php echo $posts[1]['title'];?></h3>
           <div class="mb-1 text-body-secondary">Nov 12</div>
-          <p class="card-text mb-auto"><?php echo $posts[1]['content'];?></p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continue reading
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-          </a>
+          <p class="card-text mb-auto"><?php echo $posts[1]['content'];?></p>  
+         
+         
+          <!-- <a href="testview.php?id=<?php echo $posts[1]['test_blog_id'];?>" class="icon-link gap-1 icon-link-hover stretched-link">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg> -->
+         
+          <?php
+            if(isset($_SESSION["username"])){
+                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="testview.php?id=' . $posts[1]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+            }else{
+                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="view_post_guest.php?id=' . $posts[1]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+            };
+        ?>
+        
+        
+        </a>
         </div>
         <div class="col-auto d-none d-lg-block">
             <img src="../images/Midas.png" class="bd-placeholder-img" width="200" height="250" alt="Descrierea imaginii">
@@ -149,9 +197,13 @@ while ($row = mysqli_fetch_assoc($query)) {
           <h3 class="mb-0"><?php echo $posts[3]['title']?></h3>
           <div class="mb-1 text-body-secondary">Nov 11</div>
           <p class="mb-auto"><?php echo $posts[3]['content']?></p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continue reading
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+          <?php
+            if(isset($_SESSION["username"])){
+                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="testview.php?id=' . $posts[3]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+            }else{
+                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="view_post_guest.php?id=' . $posts[3]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+            };
+        ?>
           </a>
         </div>
         <div class="col-auto d-none d-lg-block">
@@ -160,7 +212,108 @@ while ($row = mysqli_fetch_assoc($query)) {
       </div>
     </div>
   </div>
+</div>
+</div>
 
+
+
+<!-- CARDS -->
+<section class="dark">
+	<div class="container py-4">
+		<article class="postcard dark blue">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="../images/2.jpg" alt="Image Title" />
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title blue"><a href="#">Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>5 min reading</li>
+					<li class="tag__item play blue">
+						<a href="#"><i class="fas fa-play mr-2"></i>Read More</a>
+					</li>
+				</ul>
+			</div>
+		</article>
+		<article class="postcard dark red">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="../images/3.jpg" alt="Image Title" />	
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title red"><a href="#">Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>5 min reading.</li>
+					<li class="tag__item play red">
+						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+					</li>
+				</ul>
+			</div>
+		</article>
+		<article class="postcard dark green">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="../images/4.png" alt="Image Title" />
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title green"><a href="#">Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>5 min reading.</li>
+					<li class="tag__item play green">
+						<a href="#"><i class="fas fa-play mr-2"></i>Read More</a>
+					</li>
+				</ul>
+			</div>
+		</article>
+		<article class="postcard dark yellow">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="../images/5.png" alt="Image Title" />
+			</a>
+			<div class="postcard__text">
+				<h1 class="postcard__title yellow"><a href="#">Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>5 min reading.</li>
+					<li class="tag__item play yellow">
+						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+					</li>
+				</ul>
+			</div>
+		</article>
+	</div>
+</section>
+
+
+
+
+
+<br>
+<br>
+<main class="container">   
   <div class="row g-5">
     <div class="col-md-8">
 
@@ -175,7 +328,7 @@ while ($row = mysqli_fetch_assoc($query)) {
         <blockquote class="blockquote">
         </blockquote>
         <p>The crypto space is brimming with innovation and activity, presenting a constant stream of new projects, trends, and insights. Yet, within this vast sea of information, it's all too easy to feel overwhelmed and adrift. Traditional news outlets often fall short in providing comprehensive coverage, and centralized platforms may suffer from bias or censorship. This is precisely where Uptodate steps in. By harnessing the power of decentralization and community-driven curation, Uptodate aims to be the go-to destination for all your crypto news needs.</p>
-        <h2>How Uptodate Works:</h2>
+        
         <p>At its core, Uptodate operates as a platform by the community, for the community. Leveraging blockchain technology, we ensure transparency, immutability, and trustworthiness in the content we deliver. Our decentralized model empowers users to contribute, curate, and consume content without the interference of intermediaries. Every blog post published on Uptodate is authenticated with a crypto wallet transaction, ensuring its integrity and authenticity.</p>
 
     <br>        
@@ -187,14 +340,7 @@ while ($row = mysqli_fetch_assoc($query)) {
           <li>Empowering users to curate content.</li>
           <li>Rewarding valuable contributions.</li>
           <li>Fostering a dynamic ecosystem.</li>
-        </ul>
-       
-        <h2>Join the Uptodate Community:</h2>
-        <ul>
-          <li>Ready to transform the way you consume crypto news?</li>
-          <li><em>Join us on Uptodate.</em></li>
-          <li>Become part of a vibrant community.</li>
-          <li>Dedicated to staying informed, connected, and empowered</li>
+  
           <li><ins>Navigate the ever-evolving crypto landscape with confidence and clarity.</ins> </li>
         </ul>
         <h2>Conclusion:</h2>
@@ -203,7 +349,108 @@ while ($row = mysqli_fetch_assoc($query)) {
 <hr>
 <br>
 <br>
+        </main>
 
+
+<div class="container">
+    <div class="row ">
+        <!-- <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-cherry">
+                <div class="card-statistic-3 p-4">
+                    <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0">New Orders</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                                3,243
+                            </h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span>12.5% <i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                        <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-blue-dark">
+                <div class="card-statistic-3 p-4">
+                    <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0">Users</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                            <?php echo $total_useri; ?>
+                            </h2>
+                        </div>
+                        <div class="col-4 text-end">
+                            <span><i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-green-dark">
+                <div class="card-statistic-3 p-4">
+                    <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0">Total Blogs</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                            <?php echo $total_inregistrari; ?>
+                            </h2>                            
+                        </div>
+                        <div class="col-4 text-end">
+                            <span><i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+  
+
+
+
+        <!-- <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-orange-dark">
+                <div class="card-statistic-3 p-4">
+                    <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0">Revenue Today</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                                $11.61k
+                            </h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span>2.5% <i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                        <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<main class="container">   
 <!--                  -->
 
       <article class="blog-post">
@@ -241,19 +488,63 @@ while ($row = mysqli_fetch_assoc($query)) {
       <br>
       <br>
 
+      <article class="blog-post">
+<h2 class="display-5 link-body-emphasis mb-1 row flex-nowrap justify-content-center align-items-center">Upcoming:</h2>        
+<br>
+
+
+
+
 
       <!--               -->
-      <article class="blog-post">
-        <h2 class="display-5 link-body-emphasis mb-1">Upcoming:</h2>
-<br>        
-          <dt>Connecting with MultiversX API:</dt>
-          <p> One of the exciting developments on the horizon for Uptodate is our integration with the MultiversX API. This groundbreaking partnership will allow us to access a wealth of real-time data and insights from the MultiversX ecosystem, providing our users with unparalleled access to the latest trends, analyses, and developments in the crypto space.</p>
-          <dt>Proof of Identity on the Blockchain:</dt>
-          <p>At Uptodate, we take security and trustworthiness seriously. That's why we're implementing a cutting-edge Proof of Identity mechanism powered by blockchain technology. With this feature, users can verify their identity securely and transparently, ensuring that the content they create and consume on Uptodate is authentic and reliable.</p>
-          <dt>Delving into Blockchain Basics:</dt>
-          <p>For those new to blockchain technology, let's take a moment to explore the basics. Blockchain is a decentralized, distributed ledger technology that records transactions across a network of computers. Each transaction is securely encrypted and linked to the previous one, forming a chain of blocks that are immutable and tamper-proof. This inherent transparency and security make blockchain an ideal solution for verifying identity and ensuring the integrity of data on platforms like Uptodate.</p>
 
-      </article>
+
+
+<div class="container-fluid py-5">
+
+<div class="row">
+  <div class="col-lg-12">
+
+    <div class="horizontal-timeline">
+
+      <ul class="list-inline items">
+        <li class="list-inline-item items-list">
+          <div class="px-4">
+            <div class="event-date badge bg-info">Q2 2024</div>
+            <h5 class="pt-2">Connecting with MultiversX API:</h5>
+            <p class="text-muted">Owith unparalleled access to the latest trends, analyses, and developments in the crypto space.</p>
+          </div>
+        </li>
+        
+        <li class="list-inline-item items-list">
+          <div class="px-4">
+            <div class="event-date badge bg-success">Q2 2024</div>
+            <h5 class="pt-2">Proof of Identity on the Blockchain:</h5>
+            <p class="text-muted">With this feature, users can verify their identity securely and transparently, ensuring that the content they create and consume on Uptodate is authentic and reliable.
+            </p>            
+          </div>
+        </li>         
+                
+        <li class="list-inline-item items-list">
+          <div class="px-4">
+            <div class="event-date badge bg-warning">Q4 2024</div>
+            <h5 class="pt-2">Launch MVP</h5>
+            <p class="text-muted">Operate without a central authority, giving all participants an equal say in decision-making processes.
+            </p>
+            
+            <li class="list-inline-item items-list">
+          <div class="px-4">
+            <div class="event-date badge bg-danger">Q3 2024</div>
+            <h5 class="pt-2">Delving into Blockchain Basics:</h5>
+            <p class="text-muted">Each transaction is securely encrypted and linked to the previous one, forming a chain of blocks that are immutable and tamper-proof. </p>
+            </li>               
+                    </div>
+                </div>              
+              </ul>
+            </div>  
+        </div>
+    </div>
+</article>
 
    
 
@@ -269,33 +560,67 @@ while ($row = mysqli_fetch_assoc($query)) {
         <div>
           <h4 class="fst-italic">Recent posts</h4>
           <ul class="list-unstyled">
-            <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-              <img src="../images/Midas.png" class="bd-placeholder-img" width="100%" height="96" alt="Descrierea imaginii">
-                <div class="col-lg-8">
-                  <h6 class="mb-0"><?php echo $posts[2]['title'];?></h6>
-                  <small class="text-body-secondary">January 15, 2024</small>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-              <img src="../images/ith.jpeg" class="bd-placeholder-img" width="100%" height="96" alt="Descrierea imaginii">
-                <div class="col-lg-8">
-                  <h6 class="mb-0"><?php echo $posts[1]['title'];?></h6>
-                  <small class="text-body-secondary">January 14, 2024</small>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-              <img src="../images/Midas.png" class="bd-placeholder-img" width="100%" height="96" alt="Descrierea imaginii">
-                <div class="col-lg-8">
-                  <h6 class="mb-0"><?php echo $posts[0]['title'];?></h6>
-                  <small class="text-body-secondary">January 13, 2024</small>
-                </div>
-              </a>
-            </li>
+
+
+           <!-- VERIFICAM DACA EXISTA POSTARE DACA E STEARSA ATUNCI AFISAM NIMIC -->
+                <?php
+                        if(isset($posts[2]['title'])) {
+                            echo '<li>';
+                            echo '<a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="testview.php?id=' . $posts[2]['test_blog_id'] . '">';
+                            echo '<img src="../images/1.png" class="bd-placeholder-img" width="100%" height="110" alt="Descrierea imaginii">';
+                            echo '<div class="col-lg-8">';
+                            echo '<h6 class="mb-0">' . $posts[2]['title'] . '</h6>';
+                            echo '<small class="text-body-secondary">January 15, 2024</small>';
+                            echo '</div>';
+                            echo '</a>';
+                            echo '</li>';
+                        }
+                    ?>
+
+
+         <?php
+                        if(isset($posts[1]['title'])) {
+                            echo '<li>';
+                            echo '<a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="testview.php?id=' . $posts[1]['test_blog_id'] . '">';
+                            echo '<img src="../images/2.png" class="bd-placeholder-img" width="100%" height="110" alt="Descrierea imaginii">';
+                            echo '<div class="col-lg-8">';
+                            echo '<h6 class="mb-0">' . $posts[1]['title'] . '</h6>';
+                            echo '<small class="text-body-secondary">January 15, 2024</small>';
+                            echo '</div>';
+                            echo '</a>';
+                            echo '</li>';
+                        }
+                    ?>
+            
+
+                    <?php
+                    if(isset($posts[4]['title'])) {
+                        echo '<li>';
+                        echo '<a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="testview.php?id=' . $posts[4]['test_blog_id'] . '">';
+                        echo '<img src="../images/3.png" class="bd-placeholder-img" width="100%" height="110" alt="Descrierea imaginii">';
+                        echo '<div class="col-lg-8">';
+                        echo '<h6 class="mb-0">' . $posts[4]['title'] . '</h6>';
+                        echo '<small class="text-body-secondary">January 13, 2024</small>';
+                        echo '</div>';
+                        echo '</a>';
+                        echo '</li>';
+                    }
+                    ?>
+
+                    <?php
+                    if(isset($posts[5]['title'])) {
+                        echo '<li>';
+                        echo '<a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="testview.php?id=' . $posts[4]['test_blog_id'] . '">';
+                        echo '<img src="../images/4.png" class="bd-placeholder-img" width="100%" height="110" alt="Descrierea imaginii">';
+                        echo '<div class="col-lg-8">';
+                        echo '<h6 class="mb-0">' . $posts[5]['title'] . '</h6>';
+                        echo '<small class="text-body-secondary">January 13, 2024</small>';
+                        echo '</div>';
+                        echo '</a>';
+                        echo '</li>';
+                    }
+                    ?>
+
           </ul>
         </div>
 
@@ -303,9 +628,9 @@ while ($row = mysqli_fetch_assoc($query)) {
         <div class="p-4">
           <h4 class="fst-italic">Social</h4>
           <ol class="list-unstyled">
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Instangram</a></li>
+            <li><a href="https://github.com/imlimbasan">GitHub</a></li>
+            <li><a href="https://twitter.com/MAIAdviserX">Twitter</a></li>
+            <li><a href="https://www.youtube.com/@XAdvise">Youtube</a></li>
           </ol>
         </div>
       </div>
@@ -316,11 +641,18 @@ while ($row = mysqli_fetch_assoc($query)) {
 
 <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
   <p class="mb-0">
-    <a href="#">Back to top</a>
+    <a href="#" class="btn btn-outline-dark">Back to top</a>
   </p>
+  
 </footer>
-<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
+
+
+
+
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <link rel="stylesheet"  href="../cssPages/blog.css">
     </body>
