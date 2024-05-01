@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+$conn = mysqli_connect("localhost", "root", "PasssS2@", "up_to_date");
+
+
 
 ?>
 
@@ -307,57 +310,56 @@ session_start();
     </div>
   </div>
 </div>
-
 <footer class="nav-bg">
-  <div class="container py-5">
-      <div class="row">
-          <div class="col-md-6">
-              <h4>A Community driven blog for all cryptocurrencies</h4>
-              <div class="newsletter-container nav-bg">
-                  <h4>Be first to know!</h4>
-                  <form action="#" method="POST">
-                      <div class="input-group mb-3">
-                          <input type="email" class="form-control" placeholder="Enter your email" aria-label="Recipient's email" aria-describedby="button-addon2">
-                          <div class="input-group-append">
-                              <button class="btn btn-outline" type="button" id="button-addon2">Subscribe</button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="row">
-                  <div class="col-md-6">
-                      <h4>Online Shop</h4>
-                      <ul class="list-unstyled ">
-                          <li><a href="#" class="nav-bg">Watch</a></li>
-                          <li><a href="#" class="nav-bg">Bag</a></li>
-                          <li><a href="#" class="nav-bg">Shoes</a></li>
-                          <li><a href="#" class="nav-bg">Dress</a></li>
-                      </ul>
-                  </div>
-                  <div class="col-md-6">
-                      <h4>Follow Us</h4>
-                      <ul class="list-unstyled">
-                          <li><a href="#" class="nav-bg">Instagram</a></li>
-                          <li><a href="#" class="nav-bg">Facebook</a></li>
-                          <li><a href="#" class="nav-bg">YouTube</a></li>
-                          <li><a href="#" class="nav-bg">Twitter</a></li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <p>&copy; 2024 DYOR, <a href="#" class="nav-bg">Terms</a>,    <a href="#" class="nav-bg">Privacy</a></p>
-           
-          </div>
-      </div>
-  </div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>A Community driven blog for all cryptocurrencies</h4>
+                <div class="newsletter-container nav-bg">
+                    <h4>Be first to know!</h4>
+                    <form action="../includes/newsletter.php" method="POST">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Enter your email" aria-label="Recipient's email" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button type="submit" name="submit-newsletter" class="btn btn-primary px-4">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Online Shop</h4>
+                        <ul class="list-unstyled ">
+                            <li><a href="#" class="nav-bg">Watch</a></li>
+                            <li><a href="#" class="nav-bg">Bag</a></li>
+                            <li><a href="#" class="nav-bg">Shoes</a></li>
+                            <li><a href="#" class="nav-bg">Dress</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Follow Us</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="nav-bg">Instagram</a></li>
+                            <li><a href="#" class="nav-bg">Facebook</a></li>
+                            <li><a href="#" class="nav-bg">YouTube</a></li>
+                            <li><a href="#" class="nav-bg">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>&copy; 2024 DYOR, <a href="#" class="nav-bg">Terms</a>,    <a href="#" class="nav-bg">Privacy</a></p>
+            </div>
+        </div>
+    </div>
 </footer>
+
 
    
 

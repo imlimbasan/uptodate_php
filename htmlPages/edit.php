@@ -17,6 +17,23 @@ include "../includes/update_post.php";
 <div class="container mt-5">
 
 <?php foreach ($query as $q) {?>
+   
+   
+   
+   
+   
+   
+    <!-- <form action="../includes/updatePostClick.php" method="POST"> 
+    <input type="text" hidden name="id" value="<?php echo $q['test_blog_id'] ?>"></input>
+    <input type="text" name="title" placeholder="Blog Title" class="form-control bg-dark text-white my-3 text-center" value="<?php echo $q['title'] ?>">
+    <textarea name="content" class="form-control bg-dark text-white my-3"><?php echo $q['content'] ?></textarea> 
+    <button name="update" class="btn btn-dark">Update</button>
+</form> -->
+
+   
+   
+   
+   
     <form action="../includes/updatePostClick.php" method="GET">
             <input type="text" hidden name="id" value="<?php echo $q['test_blog_id'] ?>"></input>
             <input type="text" name="title" placeholder="Blog Title" class="form-control bg-dark text-white my-3 text-center" value="<?php echo $q['title'] ?>">

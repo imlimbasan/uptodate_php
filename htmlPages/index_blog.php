@@ -3,6 +3,7 @@ session_start();
 
 $conn = mysqli_connect("localhost", "root", "PasssS2@", "up_to_date");
 
+
 $sql_count = "SELECT COUNT(*) AS total_inregistrari FROM test_blog";
 $query_count = mysqli_query($conn, $sql_count);
     $row_count = mysqli_fetch_assoc($query_count);
@@ -38,8 +39,13 @@ define('__DEBUG__', true);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="blog.css">
-    <link rel="stylesheet" type="text/css" href="blog.rtl.css">    
+    <link rel="stylesheet" type="text/css" href="../cssPages/index.css">
+    <link rel="stylesheet" type="text/css" href="../cssPages/footer.css">
+    <link rel="stylesheet" type="text/css" href="../cssPages/body.css">
+    <link rel="stylesheet" type="text/css" href="../cssPages/slider.css">
+    <link rel="stylesheet" type="text/css" href="../cssPages/navbar.css">
+    <!-- <link rel="stylesheet" href="../cssPages/blog.css">  -->
+    <link rel="stylesheet" href="../cssPages/categories.css">   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/f/css/lightbox.css?<?=__DEBUG__?time():''?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -67,6 +73,8 @@ define('__DEBUG__', true);
 
 <!-- favicons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="../cssPages/blog.css">
 
   </head>
   <body>
@@ -103,19 +111,25 @@ define('__DEBUG__', true);
 
 
 
+
+<header>
+     <div class="nav-bg fixed-top ">
+   <div class="nav-bg container">
+
+
+
+<div class="bg-nav">
 <div class="content d-flex justify-content-center align-items-center">
 <div class="welcome"> 
   <header class=" lh-1 py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
-        <a class="link-secondary" href="index.php">About Us</a>
+        <a class="link-secondary text-white" href="index.php">About Us</a>
       </div>
       <div class="col-4 text-center">
         <a class="blog-header-logo text-body-emphasis text-decoration-none" href="index_blog.php">UpToDate</a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">   
-
-      
       <?php
             if(isset($_SESSION["username"])){
                 echo '<a class="btn btn-sm btn-outline-dark mx-2" href="test1index.php">Create Post</a>';
@@ -124,102 +138,191 @@ define('__DEBUG__', true);
             };
         ?> 
 
+          <a class="btn btn-sm mx-2" href="./contact.php">Contact</a>
+     
+
+<?php
+            if(isset($_SESSION["username"])){
+                echo '<a class="btn btn-sm  mx-2" href="../htmlPages/my_account.php">My account</a>';
+            }else{
+                echo '<a class="d-none" href="./my_account.php"></a>';
+            };
+        ?>
+
             <?php
             if(isset($_SESSION["username"])){
-                echo '<a class="btn btn-sm btn-outline-secondary mx-2" href="../includes/logout.php">LOG OUT</a>';
+                echo '<a class="btn btn-sm  mx-2" href="../includes/logout.php">LOG OUT</a>';
             }else{
-                echo '<a class="btn btn-sm btn-outline-secondary mx-2" href="./login.php">LOG IN</a>';
+                echo '<a class="btn btn-sm  mx-2" href="./login.php">LOG IN</a>';
             };
         ?>
       </div>
     </div>
   </header>
 </div>
-        </div>
-
-
-
-
-<div class="content d-flex justify-content-center align-items-center">
-<div class="welcome">   
-  <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary  ">  
-    <div class="col-lg-6 px-0">
-      <h1 class="display-4 fst-italic"><?php echo $posts[0]['title']; ?></h1>
-      <p class="lead my-3"><?php echo $posts[0]['content']; ?></p>
-
-      <!-- <p class="lead mb-0"><a href="view_post_guest.php?id=<?php echo $posts[0]['test_blog_id'];?>" class="text-body-emphasis fw-bold">Continue reading...</a></p> -->
-
-      
-      <?php
-            if(isset($_SESSION["username"])){
-                echo '<p class="lead mb-0"><a class="text-body-emphasis fw-bold" href="testview.php?id=' . $posts[0]['test_blog_id'] . '">Continue reading...</a></p>';
-            }else{
-                echo '<p class="lead mb-0"><a class="text-body-emphasis fw-bold" href="view_post_guest.php?id=' . $posts[0]['test_blog_id'] . '">Continue reading...</a></p>';
-            };
-        ?>
-
-    </div>
-  </div>
-
-
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary-emphasis">Music</strong>
-          <h3 class="mb-0"><?php echo $posts[1]['title'];?></h3>
-          <div class="mb-1 text-body-secondary">Nov 12</div>
-          <p class="card-text mb-auto"><?php echo $posts[1]['content'];?></p>  
-         
-         
-          <!-- <a href="testview.php?id=<?php echo $posts[1]['test_blog_id'];?>" class="icon-link gap-1 icon-link-hover stretched-link">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg> -->
-         
-          <?php
-            if(isset($_SESSION["username"])){
-                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="testview.php?id=' . $posts[1]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
-            }else{
-                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="view_post_guest.php?id=' . $posts[1]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
-            };
-        ?>
-        
-        
-        </a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-            <img src="../images/Midas.png" class="bd-placeholder-img" width="200" height="250" alt="Descrierea imaginii">
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success-emphasis">DE-FI</strong>
-          <h3 class="mb-0"><?php echo $posts[3]['title']?></h3>
-          <div class="mb-1 text-body-secondary">Nov 11</div>
-          <p class="mb-auto"><?php echo $posts[3]['content']?></p>
-          <?php
-            if(isset($_SESSION["username"])){
-                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="testview.php?id=' . $posts[3]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
-            }else{
-                echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="view_post_guest.php?id=' . $posts[3]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
-            };
-        ?>
-          </a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-        <img src="../images/Bhero.png" class="bd-placeholder-img" width="200" height="250" alt="Descrierea imaginii">
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 
+</div>
+</header>
+
+
+<div class="bg-welcome">
+        <div class="content d-flex justify-content-center align-items-center">
+        <div class="welcome">   
+          <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">  
+            <div class="col-lg-6 px-0">
+              <h1 class="display-4 fst-italic"><?php echo $posts[0]['title']; ?></h1>
+              <p class="lead my-3"><?php echo $posts[0]['content']; ?></p>
+        
+              <!-- <p class="lead mb-0"><a href="view_post_guest.php?id=<?php echo $posts[0]['test_blog_id'];?>" class="text-body-emphasis fw-bold">Continue reading...</a></p> -->
+        
+              
+              <?php
+                    if(isset($_SESSION["username"])){
+                        echo '<p class="lead mb-0"><a class="text-body-emphasis fw-bold" href="testview.php?id=' . $posts[0]['test_blog_id'] . '">Continue reading...</a></p>';
+                    }else{
+                        echo '<p class="lead mb-0"><a class="text-body-emphasis fw-bold" href="view_post_guest.php?id=' . $posts[0]['test_blog_id'] . '">Continue reading...</a></p>';
+                    };
+                ?>
+        
+            </div>
+          </div>
+        
+        
+          <div class="row mb-2 ">
+            <div class="col-md-6 ">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg_card">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-primary-emphasis">Music</strong>
+                  <h3 class="mb-0"><?php echo $posts[1]['title'];?></h3>
+                  <div class="mb-1 text-body-secondary">Nov 12</div>
+                  <p class="card-text mb-auto"><?php echo $posts[1]['content'];?></p>  
+                 
+                 
+                  <!-- <a href="testview.php?id=<?php echo $posts[1]['test_blog_id'];?>" class="icon-link gap-1 icon-link-hover stretched-link">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg> -->
+                 
+                  <?php
+                    if(isset($_SESSION["username"])){
+                        echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="testview.php?id=' . $posts[1]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+                    }else{
+                        echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="view_post_guest.php?id=' . $posts[1]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+                    };
+                ?>
+                
+                
+                </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="../images/Midas.png" class="bd-placeholder-img" width="200" height="250" alt="Descrierea imaginii">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg_card">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-success-emphasis">DE-FI</strong>
+                  <h3 class="mb-0"><?php echo $posts[3]['title']?></h3>
+                  <div class="mb-1 text-body-secondary">Nov 11</div>
+                  <p class="mb-auto"><?php echo $posts[3]['content']?></p>
+                  <?php
+                    if(isset($_SESSION["username"])){
+                        echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="testview.php?id=' . $posts[3]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+                    }else{
+                        echo '<a class="icon-link gap-1 icon-link-hover stretched-link" href="view_post_guest.php?id=' . $posts[3]['test_blog_id'] . '">Continue reading<svg class="bi"><use xlink:href="#chevron-right"/></svg>';
+                    };
+                ?>
+                  </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                <img src="../images/Bhero.png" class="bd-placeholder-img" width="200" height="250" alt="Descrierea imaginii">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+ </div>
+
+
+
+
+
+
+<!-- SECTIUNE DE CATEGORII!!!!!!!!!!! -->
+
+        <!-- <section>
+        <div class="container">
+            <div class="text-center margin-40px-bottom">
+                <h3 class="no-margin-bottom">Categories</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 sm-margin-30px-bottom">
+                    <div class="mh-100">
+                        <a href="#" class="card bg-img box-hover cover-background h-100 border-0 p-4 dtext-decoration-none " style="background-image: url(../images/categoriesfirst.png);">
+                            <div class="mt-auto position-relative z-index-9">
+                                <h5 class="text-white ">DE-FI</h5>
+                                <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row margin-30px-bottom">
+                        <div class="col-md-4 xs-margin-30px-bottom">
+                            <a href="" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/02.jpg" style="background-image: url(../images/categories1.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">RWA</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 xs-margin-30px-bottom">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/03.jpg" style="background-image: url(../images/categories2.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">Gaming</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/04.jpg" style="background-image: url(../images/categories3.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">NFTs</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 xs-margin-30px-bottom">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/05.jpg" style="background-image: url(../images/categories6.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">Owr picks &amp; Projects</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-5">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/06.jpg" style="background-image: url(../images/categories5.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">Regulation</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
 
 
 <!-- CARDS -->
-<section class="dark">
+<section class="cards_backgrounds">
 	<div class="container py-4">
+
 		<article class="postcard dark blue">
 			<a class="postcard__img_link" href="#">
 				<img class="postcard__img" src="../images/2.jpg" alt="Image Title" />
@@ -304,6 +407,8 @@ define('__DEBUG__', true);
 				</ul>
 			</div>
 		</article>
+
+    
 	</div>
 </section>
 
@@ -345,7 +450,10 @@ define('__DEBUG__', true);
         </ul>
         <h2>Conclusion:</h2>
         <p>In a world inundated with information, Uptodate emerges as a beacon of reliability, transparency, and decentralization. Join us as we redefine how we stay informed in the fast-paced realm of crypto. Together, let's forge a future where knowledge is accessible to all, and information is truly decentralized.</p>
-       </article>
+       
+      
+      </article>
+       
 <hr>
 <br>
 <br>
@@ -450,8 +558,10 @@ define('__DEBUG__', true);
     </div>
 </div>
 
+<div class="cards_backgrounds">
 <main class="container">   
 <!--                  -->
+<br> <br> 
 
       <article class="blog-post">
         <h2 class="display-5 link-body-emphasis mb-1">EGLD STAKING V4 IT'S COMING SOON!</h2>
@@ -462,8 +572,10 @@ define('__DEBUG__', true);
           <p><strong>Before the update, the system had some limitations and was not functioning at its maximum capacity. The waiting list was a hurdle, and some nodes did not contribute to the network's security as ideally as they should have.</strong></p>
         </blockquote>
         <p>But now, the waiting list has been completely eliminated. Instead, a bidding system has been introduced, which selects the best validators for the network. This means that our network becomes more open, democratic, and robust than ever before.</p>
-        <p>But what does this mean for you as a user? Well, here are some of the major advantages you will experience:</p>
-        <table class="table">
+        <p>But what does this mean for you as a user? Well, here are some of the major advantages you will experience: Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus nam error nostrum harum consequatur perferendis deserunt eligendi facere, doloribus ratione minus ipsum consectetur quibusdam nesciunt explicabo accusantium dicta, illo atque nobis in optio officiis at dolore nulla? Quisquam distinctio quam culpa earum numquam, ex, et rerum ratione maxime molestiae nihil ab at labore illum iusto eius delectus similique a, obcaecati placeat. Omnis ratione ipsam officia quasi ex, animi fugit ducimus ipsa corrupti quos commodi excepturi, quia rerum voluptate quae. Eveniet iusto, libero quam quia consequatur, provident culpa qui laboriosam sunt maiores commodi aliquam minus, excepturi id soluta totam adipisci architecto aut voluptate consequuntur ab. Quis atque aperiam earum dicta, suscipit maiores et voluptatibus provident similique incidunt nam dolorem officiis quo deserunt laborum nemo reprehenderit veniam. Aut officiis ipsum dignissimos delectus consectetur labore maiores reiciendis itaque, dicta harum consequuntur a! Voluptas id laudantium, unde nobis vero voluptatem excepturi aperiam, magnam deserunt in quod quis? Officiis ullam suscipit nulla dolor doloremque quas, sapiente voluptates earum exercitationem et tenetur, ipsa incidunt adipisci repellendus facilis? Ab aliquid assumenda sit minus eligendi dolore accusamus! Impedit possimus maxime delectus nulla? Eum perspiciatis itaque quasi tempora nam cum eaque maxime, adipisci cupiditate ullam ea repellat saepe officia eligendi similique voluptatibus excepturi nemo numquam fugit! Totam ipsa provident repudiandae pariatur veniam ratione vel ut, voluptates asperiores consequuntur minus sit, sunt quam nemo ea corporis omnis. Doloribus labore aspernatur eligendi accusantium temporibus deserunt maxime laboriosam accusamus, sit molestiae veritatis incidunt, saepe reiciendis nisi cupiditate rem nemo a facilis? Veniam a impedit quia officia nam, accusantium ipsum incidunt perferendis quaerat aliquam quo similique quibusdam tempora vero cumque consequatur, error ratione at culpa voluptas aliquid vel voluptatem atque ipsam. Doloribus omnis, architecto sint debitis, eligendi dolore possimus at libero ullam tempora labore sunt excepturi unde repellendus odit placeat et magnam recusandae dignissimos expedita. Ipsa ullam est mollitia blanditiis facilis dicta repellat? Temporibus, blanditiis quis error, ea veniam suscipit quaerat a architecto ipsum perspiciatis mollitia cumque eum cupiditate! Quod hic sit fugiat cumque quaerat, quisquam quia doloribus optio, magni voluptatum rem dolore facere aliquid. At, iure laudantium aspernatur ex repudiandae suscipit amet soluta nam cumque illum maxime provident voluptate pariatur obcaecati doloremque. Numquam, reprehenderit ea nihil assumenda quo blanditiis sapiente, natus iure ducimus aliquid nostrum eius vitae voluptatem repudiandae necessitatibus reiciendis aperiam? Repellat, veniam, blanditiis quia ducimus a quasi perferendis corrupti voluptates vero quo pariatur minima, exercitationem necessitatibus suscipit inventore sint? Eaque, rem excepturi, voluptates tempora doloribus quo eius maiores beatae officiis reprehenderit temporibus aliquam iste officia reiciendis nemo dicta dignissimos commodi. Enim, quia asperiores necessitatibus nihil officia laborum accusantium commodi impedit minima quasi aut quidem soluta consequuntur aperiam dolorem! Expedita placeat ad, minima tempore at cumque itaque reprehenderit illo recusandae deleniti. Quod quis eaque aliquam voluptatibus sapiente mollitia distinctio tempora, natus unde impedit quidem eum? Quas dolore provident ad adipisci doloribus deserunt quos, at enim quidem, consequuntur quae rem, dolorem aspernatur. Facere, eius quo! Vel non recusandae, quisquam quae repellendus modi, illum sit vitae reiciendis enim, architecto necessitatibus neque? Ratione, beatae!</p>
+       
+       
+        <!-- <table class="table">
 
           <tbody>
             <tr>
@@ -479,15 +591,19 @@ define('__DEBUG__', true);
               <td>By participating in staking and delegation within a more robust and efficient network with high-quality validators, there is increased security for the network and, consequently, more attractive rewards for participants.</td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
 
         <p>Great strides have been made in the staking and delegation system, and these improvements will bring significant benefits to every user.</p>
       </article>
 
-      <hr>
+   
       <br>
+      </div>
       <br>
 
+
+      <div class="content d-flex justify-content-center align-items-center">
+<div class="welcome">
       <article class="blog-post">
 <h2 class="display-5 link-body-emphasis mb-1 row flex-nowrap justify-content-center align-items-center">Upcoming:</h2>        
 <br>
@@ -545,12 +661,10 @@ define('__DEBUG__', true);
         </div>
     </div>
 </article>
-
-   
-
     </div>
+      </div>
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <div class="position-sticky" style="top: 2rem;">
         <div class="p-4 mb-3 bg-body-tertiary rounded">
           <h4 class="fst-italic">About</h4>
@@ -562,7 +676,7 @@ define('__DEBUG__', true);
           <ul class="list-unstyled">
 
 
-           <!-- VERIFICAM DACA EXISTA POSTARE DACA E STEARSA ATUNCI AFISAM NIMIC -->
+     
                 <?php
                         if(isset($posts[2]['title'])) {
                             echo '<li>';
@@ -636,6 +750,80 @@ define('__DEBUG__', true);
       </div>
     </div>
   </div>
+ -->
+
+
+
+  <!-- SECTIUNE DE CATEGORII!!!!!!!!!!! -->
+
+        <section>
+        <div class="container">
+            <div class="text-center margin-40px-bottom">
+            <h2 class="display-5 link-body-emphasis mb-1 row flex-nowrap justify-content-center align-items-center">Categories:</h2>        
+
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-lg-3 sm-margin-30px-bottom">
+                    <div class="mh-100">
+                        <a href="#" class="card bg-img box-hover cover-background h-100 border-0 p-4 dtext-decoration-none " style="background-image: url(../images/categoriesfirst.png);">
+                            <div class="mt-auto position-relative z-index-9">
+                                <h5 class="text-white ">DE-FI</h5>
+                                <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row margin-30px-bottom">
+                        <div class="col-md-4 xs-margin-30px-bottom">
+                            <a href="" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/02.jpg" style="background-image: url(../images/categories1.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">RWA</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 xs-margin-30px-bottom">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/03.jpg" style="background-image: url(../images/categories2.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">Gaming</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/04.jpg" style="background-image: url(../images/categories3.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">NFTs</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 xs-margin-30px-bottom">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/05.jpg" style="background-image: url(../images/categories6.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">Owr picks &amp; Projects</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-5">
+                            <a href="#" class="card bg-img box-hover cover-background border-0 p-4 text-decoration-none" data-background="img/content/06.jpg" style="background-image: url(../images/categories5.png);">
+                                <div class="mt-auto position-relative z-index-9">
+                                    <h5 class="text-white">Regulation</h5>
+                                    <div class="position-relative z-index-9 text-white opacity6">FETCH LA POSTARI</div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </main>
 
@@ -648,6 +836,84 @@ define('__DEBUG__', true);
 
 
 
+<footer class="nav-bg">
+  <div class="container py-5">
+      <div class="row">
+
+
+      <div class="col-md-6">
+                <h4>A Community driven blog for all cryptocurrencies</h4>
+                <div class="newsletter-container nav-bg">
+                    <h4>Be first to know!</h4>
+                    <form action="../includes/newsletter.php" method="POST">
+                        
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Enter your email" aria-label="Recipient's email" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button type="submit" name="submit-newsletter" class="btn btn-primary px-4" data-toggle="modal" data-target="exampleModal">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+          <div class="col-md-6">
+              <div class="row">
+                  <div class="col-md-6">
+                      <h4>Coming soon</h4>
+                      <ul class="list-unstyled ">
+                          <li><a href="#" class="nav-bg">De-fi</a></li>
+                          <li><a href="#" class="nav-bg">Ai</a></li>
+                          <li><a href="#" class="nav-bg">Blogs</a></li>
+                          <li><a href="#" class="nav-bg">Membership</a></li>
+                      </ul>
+                  </div>
+                  <div class="col-md-6">
+                      <h4>Follow Us</h4>
+                      <ul class="list-unstyled">
+                          <li><a href="#" class="nav-bg">Instagram</a></li>
+                          <li><a href="#" class="nav-bg">Facebook</a></li>
+                          <li><a href="#" class="nav-bg">YouTube</a></li>
+                          <li><a href="#" class="nav-bg">Twitter</a></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <p>&copy; 2024 DYOR, <a href="#" class="nav-bg">Terms</a>,    <a href="#" class="nav-bg">Privacy</a></p>
+           
+          </div>
+      </div>
+  </div>
+</footer>
 
 
 
@@ -655,5 +921,9 @@ define('__DEBUG__', true);
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <link rel="stylesheet"  href="../cssPages/blog.css">
+
+<link rel="stylesheet" type="text/css" href="../cssPages/blog.css?<?php echo time(); ?>" />
+
+
     </body>
 </html>

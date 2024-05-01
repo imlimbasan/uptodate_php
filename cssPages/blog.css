@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 $main-green: #79dd09 !default;
 $main-green-rgb-015: rgba(121, 221, 9, 0.1) !default;
 $main-yellow: #bdbb49 !default;
@@ -6,22 +6,45 @@ $main-yellow-rgb-015: rgba(189, 187, 73, 0.1) !default;
 $main-red: #bd150b !default;
 $main-red-rgb-015: rgba(189, 21, 11, 0.1) !default;
 $main-blue: #0076bd !default;
-$main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
+$main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default; */
 
 
 
 
 /* This pen */
-body {
+
+/* body {
 	font-family: "Baloo 2", cursive;
 	font-size: 16px;
+  background-color: red !important;
 	color: #ffffff;
 	text-rendering: optimizeLegibility;
 	font-weight: initial;
+} */
+
+/* .bg-nav{
+  background-color: #000;
+  margin-top: -0.5rem;
+  padding: 0rem;
+  color: white;
+} */
+
+.bg-welcome{ 
+  margin-top: 10rem;
 }
 
+.bg_card{
+  background: #bceaff !important;
+
+}
+
+.cards_backgrounds{
+  background: #bceaff !important;
+}
+
+
 .dark {
-	background: #110f16;
+	background: #110f16 !important;
 }
 
 
@@ -241,7 +264,7 @@ a, a:hover {
 }
 
 /* COLORS */
-.postcard .postcard__tagbox .green.play:hover {
+/* .postcard .postcard__tagbox .green.play:hover {
 	background: $main-green;
 	color: black;
 }
@@ -367,7 +390,7 @@ a, a:hover {
 			transparent 50%
 		);
 	}
-}
+} */
 
 
 
@@ -485,4 +508,5 @@ a, a:hover {
     min-width: 1520px;
     align-items: center;
 }
+
 
