@@ -17,7 +17,7 @@ $query_users = mysqli_query($conn, $sql_count);
 
 
 
-$sql = "SELECT * FROM test_blog WHERE test_blog_id IN (16, 18, 19, 20, 21, 22, 24, 25, 26)";
+$sql = "SELECT * FROM test_blog WHERE test_blog_id IN (16, 18, 19, 20, 21, 22, 24, 25, 26, 29)";
 $query = mysqli_query($conn, $sql);
 $posts = array();
 
@@ -360,7 +360,7 @@ define('__DEBUG__', true);
 				<ul class="postcard__tagbox">
 					<li class="tag__item"><i class="fas fa-clock mr-2"></i>5 min reading.</li>
 					<li class="tag__item play red">
-						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+						<a href="#"><i class="fas fa-play mr-2"></i>Read More</a>
 					</li>
 				</ul>
 			</div>
@@ -402,7 +402,7 @@ define('__DEBUG__', true);
 				<ul class="postcard__tagbox">
 					<li class="tag__item"><i class="fas fa-clock mr-2"></i>5 min reading.</li>
 					<li class="tag__item play yellow">
-						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+						<a href="#"><i class="fas fa-play mr-2"></i>Read More</a>
 					</li>
 				</ul>
 			</div>
