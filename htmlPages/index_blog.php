@@ -17,18 +17,19 @@ $query_users = mysqli_query($conn, $sql_count);
 
 
 
-$sql = "SELECT * FROM test_blog WHERE test_blog_id IN (16, 18, 19, 20, 21, 22, 24, 25, 26, 29)";
+
+$sql = "SELECT * FROM test_blog";
 $query = mysqli_query($conn, $sql);
 $posts = array();
 
 while ($row = mysqli_fetch_assoc($query)) {
-    array_push($posts, $row);
+    $posts[] = $row;
 }
 
 mysqli_close($conn);
 
 define('__DEBUG__', true);
-
+?>
 
 
 ?>
